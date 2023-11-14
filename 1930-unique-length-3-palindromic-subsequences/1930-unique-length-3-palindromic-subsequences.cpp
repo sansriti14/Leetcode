@@ -13,7 +13,7 @@ public:
             if(occurence[i].second != -1) {
                 unordered_set<char> unique_chars;
                 for(int j = occurence[i].first+1; j < occurence[i].second; j++) {
-                    unique_chars.insert(s[j] - 'a');
+                    unique_chars.insert(s[j]);
                 }
                 
                 count += unique_chars.size();
