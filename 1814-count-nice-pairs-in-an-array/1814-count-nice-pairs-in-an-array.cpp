@@ -1,13 +1,8 @@
 class Solution {
 private:
-    int reverseNum(int n) {
-        int revNum = 0;
-        while(n > 0) {
-            revNum = revNum * 10 + (n % 10);
-            n /= 10;
-        }
-        
-        return revNum;
+    int reverseNum(string num) {
+        reverse(num.begin(), num.end());
+        return stoi(num);
     }
     
 public:
@@ -17,7 +12,7 @@ public:
         int mod = 1e9 + 7;
         
         for(auto& num : nums) {
-            count = (count + mp[num - reverseNum(num)]++) % mod;
+            count = (count + mp[num - reverseNum(to_string(num))]++) % mod;
         }
         
         return count;
