@@ -26,7 +26,7 @@ public:
     void solve(TreeNode* node) {
         if(node == NULL) return;
         int count = 0;
-        int average = (findSum(node, count))/ count;
+        int average = (findSum(node, count))/count;
         
         if(average == node->val) ans++;
         
