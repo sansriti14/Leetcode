@@ -1,31 +1,31 @@
 class Solution {
 public:
     int knightDialer(int n) {
-        if(n == 1) return 10;
-        
-        vector<long long int> v(10,1);
-        vector<long long int> temp(10);
-        v[5]=0;
-        
-        int mod = 1e9 + 7;
-        for(int i = 1; i < n; i++) {
-            temp[0] = (v[4] + v[6]) % mod;
-            temp[1] = (v[6] + v[8]) % mod;
-            temp[2] = (v[7] + v[9]) % mod;
-            temp[3] = (v[4] + v[8]) % mod;
-            temp[4] = (v[0] + v[3] + v[9]) % mod;
-            temp[6] = (v[0] + v[1] + v[7]) % mod;
-            temp[7] = (v[2] + v[6]) % mod;
-            temp[8] = (v[1] + v[3]) % mod;
-            temp[9] = (v[2] + v[4]) % mod;
-            
-            for(int i = 0; i < 10; i++)
-                v[i] = temp[i];
+        const int mod = 1e9 + 7;        
+        long dp[n][10];
+
+        for(int i=0;i<10;i++) {
+            dp[0][i] = 1;
         }
-        
-        int sum=0;
-        for(int i = 0; i < 10; i++)
-            sum = (sum + v[i]) % mod;
-        return sum;
+
+        for(int i=1;i<n;i++) {
+            dp[i][0] = (dp[i-1][4] + dp[i-1][6])%mod;
+            dp[i][1] = (dp[i-1][6] + dp[i-1][8])%mod;
+            dp[i][2] = (dp[i-1][7] + dp[i-1][9])%mod;
+            dp[i][3] = (dp[i-1][4] + dp[i-1][8])%mod;
+            dp[i][4] = (dp[i-1][0] + dp[i-1][3] + dp[i-1][9])%mod;
+            dp[i][5] = 0;
+            dp[i][6] = (dp[i-1][0]+ dp[i-1][1] + dp[i-1][7])%mod;
+            dp[i][7] = (dp[i-1][2] + dp[i-1][6])%mod;
+            dp[i][8] = (dp[i-1][1] + dp[i-1][3])%mod;
+            dp[i][9] = (dp[i-1][4] + dp[i-1][2])%mod;
+        }
+
+        long ans = 0;
+
+        for(int i=0;i<10;i++)
+            ans = (ans+dp[n-1][i])%mod;
+
+        return (int) ans;
     }
 };
