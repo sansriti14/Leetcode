@@ -1,13 +1,14 @@
 class Solution {
 public:
     int totalMoney(int n) {
-        int week_count = n / 7;
-        int remaining_days = n % 7;
-        
-        int total = ((week_count * (week_count - 1)) / 2) * 7; 
-        total += week_count * 28; 
-        total += ((remaining_days * (remaining_days + 1)) / 2) + (week_count * remaining_days);
-        
-        return total;
+        int start = 1, ans = 0;
+        while (n > 0) {
+            for (int i = 0; i < 7 && n-- > 0; i++) {
+                ans += start + i;
+            }
+            
+            start++;
+        }
+        return ans;
     }
 };
