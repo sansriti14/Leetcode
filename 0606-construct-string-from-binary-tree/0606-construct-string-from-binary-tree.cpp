@@ -12,13 +12,25 @@
 class Solution {
 public:
     string tree2str(TreeNode* root) {
-		string ans = to_string(root->val);
-		if (root->left != NULL)
-			ans += "(" + tree2str(root->left) + ")";
-		if (root->right != NULL) { 
-			if (root->left == NULL) ans += "()";
-			ans += "(" + tree2str(root->right) + ")"; 
-		}
-		return ans;
-	}
+        string str = "";
+         check(root, str);
+         return str;
+    }
+    void check(TreeNode* root, string &str) {
+        if (root == NULL) {
+            return;
+        }
+        str += to_string(root->val);
+        if (root->left || root->right) {
+            str += '(';
+            check(root->left, str);
+            str += ')';
+        }
+        if (root->right) {
+            str += '(';
+            check(root->right, str);
+            str += ')';
+        }
+        
+    }  
 };
