@@ -6,12 +6,12 @@ public:
             total_ones += (s[i] - '0');  
         }
         
-        int count_zeros = 0, prefix = 0, max_score = 0;
+        int count_zeros = 0, max_score = 0;
         for(int i = 0; i < s.length() - 1; i++) {
             if(s[i] == '0') count_zeros++;
-            else prefix++;
+            else total_ones--;
             
-            max_score = max(max_score, (count_zeros + (total_ones - prefix)));
+            max_score = max(max_score, (count_zeros + total_ones));
         }
         
         return max_score;
