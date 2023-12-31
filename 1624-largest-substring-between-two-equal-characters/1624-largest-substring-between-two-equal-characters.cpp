@@ -1,16 +1,17 @@
 class Solution {
 public:
     int maxLengthBetweenEqualCharacters(string s) {
-        int longest_substring = -1;
+        unordered_map<char, int> firstIndex;
+        int max_diff = -1;
         
-        for (int left = 0; left < s.size(); left++) {
-            for (int right = left + 1; right < s.size(); right++) {
-                if (s[left] == s[right]) {
-                    longest_substring = max(longest_substring, right - left - 1);
-                }
+        for (int i = 0; i < s.size(); i++) {
+            if (firstIndex.find(s[i]) != firstIndex.end()) {
+                max_diff = max(max_diff, i - firstIndex[s[i]]);
+            } else {
+                firstIndex[s[i]] = i;
             }
         }
-        
-        return longest_substring;
+
+        return (max_diff == -1) ? -1 : max_diff - 1;
     }
 };
