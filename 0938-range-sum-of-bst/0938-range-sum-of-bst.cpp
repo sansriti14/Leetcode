@@ -10,22 +10,13 @@
  * };
  */
 class Solution {
-private:
-    void inorder(TreeNode* node, int low, int high, int& sum) {
-        if(node == NULL) return;
-        
-        inorder(node->left, low, high, sum);
-        if(node->val >= low && node->val <= high) {
-            sum += node->val;
-        }
-        
-        inorder(node->right, low, high, sum);
-    }
-    
 public:
     int rangeSumBST(TreeNode* root, int low, int high) {
-        int sum = 0;
-        inorder(root, low, high, sum);
+        if(root == NULL) return 0;
+        
+        int sum = root->val >= low && root->val <= high ? root->val : 0;
+        if(root -> val > low) sum += rangeSumBST(root -> left, low, high);
+        if(root -> val < high) sum += rangeSumBST(root -> right, low, high);
         return sum;
     }
 };
