@@ -1,39 +1,45 @@
 class Solution {
 private:
-    void dfs(vector<vector<int>>& grid1, vector<vector<int>>& grid2, int x, int y, int &ans) {
-        int m = grid1.size();
-        int n = grid1[0].size();
+    bool bfs(vector<vector<int>>& grid1, vector<vector<int>>& grid2, vector<vector<int>>& vis, int i,int j,int n, int m) {
+        queue<pair<int, int>> q;
+        q.push({i,j});
+        vis[i][j] = 1;
+        bool res = true;
+        while(!q.empty()) {
+            int r = q.front().first, c = q.front().second;
+            if(grid1[r][c] == 0) res=false;
+            q.pop();
+            int dx[] = {0, 1, 0, -1};
+            int dy[] = {1, 0, -1, 0};
+
+            for(int i = 0; i < 4; i++) {
+                int newX = dx[i] + r;
+                int newY = dy[i] + c;
+
+                if(newX >= 0 && newX < n && newY >= 0 && newY < m && grid2[newX][newY] == 1 && vis[newX][newY] == 0) {
+                    q.push({newX, newY});
+                    vis[newX][newY] = 1;
+                }
+            }
+        }  
         
-        if(x < 0 || y < 0 || x >= m || y >= n) return;
-        
-        if(grid1[x][y] == 0 && grid2[x][y] == 1) {
-            ans = 0;
-        }
-        
-        if(grid2[x][y] == 0) return;
-        grid2[x][y] = 0;
-        
-        dfs(grid1, grid2, x + 1, y, ans);
-        dfs(grid1, grid2, x, y + 1, ans);
-        dfs(grid1, grid2, x - 1, y, ans);
-        dfs(grid1, grid2, x, y - 1, ans);
+        return res;
     }
     
 public:
     int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
-        int m = grid1.size();
-        int n = grid1[0].size();
-        int sub_islands = 0;
-        
-        for(int i = 0; i < m ; i++) {
-            for(int j = 0; j < n; j++) {
-                if(grid2[i][j] == 1) {
-                    int ans = 1;
-                    dfs(grid1, grid2, i, j, ans);
-                    sub_islands += ans;
+        int n = grid1.size(),m=grid1[0].size();
+        vector<vector<int>> vis(n, vector<int>(m));
+        int res = 0;
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<m;j++){
+                if(grid2[i][j] == 1 && vis[i][j]==0){
+                    if(bfs(grid1,grid2,vis,i,j,n,m)) {
+                        res++;
+                    }
                 }
             }
         }
-        return sub_islands;
+        return res;
     }
 };
