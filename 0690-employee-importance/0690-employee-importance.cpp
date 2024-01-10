@@ -9,6 +9,15 @@ public:
 */
 
 class Solution {
+private:
+    void dfs(unordered_map<int, Employee*>& m, int id, int& sum) {
+        sum += m[id]->importance;
+        
+        for(auto x: m[id]->subordinates) {
+            dfs(m, x, sum);
+        }
+    }
+    
 public:
     int getImportance(vector<Employee*> employees, int id) {
         unordered_map<int, Employee*>m;
@@ -18,19 +27,7 @@ public:
         }
         
         int sum = 0;
-        deque<Employee*>q;
-        q.push_back(m[id]);
-        
-        while(!q.empty()){
-            auto p = q.front();
-            q.pop_front();
-            
-            for(auto x: p->subordinates) {
-                q.push_back(m[x]);
-            }
-            
-            sum += p->importance;
-        }
+        dfs(m, id, sum);
         
         return sum;
     }
