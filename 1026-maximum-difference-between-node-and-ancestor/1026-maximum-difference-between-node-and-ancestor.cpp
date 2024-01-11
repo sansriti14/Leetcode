@@ -10,22 +10,27 @@
  * };
  */
 class Solution {
-public:
-    int ans = 0;
-    int maxAncestorDiff(TreeNode* root) {
-        dfs(root);
-        return ans;
-    }
-    
-    pair<int, int> dfs(TreeNode* root) {
-        if(!root) 
+private:
+    pair<int, int> dfs(TreeNode* root, int& max_value) {
+        if (root == nullptr) {
             return {INT_MAX, INT_MIN};
-        auto [leftMin, leftMax]   = dfs(root -> left);
-        auto [rightMin, rightMax] = dfs(root -> right);
-        auto curMin = min({root -> val, leftMin, rightMin}), 
-		     curMax = max({root -> val, leftMax, rightMax});        
-        ans = max({ans, root -> val - curMin, curMax - root -> val});
-        
-        return {curMin, curMax};
+        }
+
+        auto left = dfs(root->left, max_value);
+        auto right = dfs(root->right, max_value);
+
+        int min_val = min(root->val, min(left.first, right.first));
+        int max_val = max(root->val, max(left.second, right.second));
+
+        max_value = max({max_value, abs(min_val - root->val), abs(max_val - root->val)});
+
+        return {min_val, max_val};
+    }    
+    
+public:
+    int maxAncestorDiff(TreeNode* root) {
+        int max_value = 0;
+        dfs(root, max_value);
+        return max_value;
     }
 };
