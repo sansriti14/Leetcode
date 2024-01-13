@@ -2,12 +2,11 @@ class Solution {
 public:
     int minSteps(string s, string t) {
         vector<int> freq (26, 0);
-        for(auto ch: s) {
-            freq[ch - 'a']++;
-        }
+        int n = s.length();
         
-        for(auto ch: t) {
-            freq[ch - 'a']--;
+        for(int i = 0; i < n; i++) {
+            freq[s[i] - 'a']++;
+            freq[t[i] - 'a']--;
         }
         
         int count = 0;
