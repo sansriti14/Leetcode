@@ -17,22 +17,17 @@ public:
         
         string str = "";
         while(pq.size() > 1) {
-            char char1 = pq.top().second;
-            int freq1 = pq.top().first;
+            auto [freq1, char1] = pq.top();
             pq.pop();
             
-            char char2 = pq.top().second;
-            int freq2 = pq.top().first;
+            auto [freq2, char2] = pq.top();
             pq.pop();
             
             str += char1;
             str += char2;
             
-            freq1--;
-            freq2--;
-            
-            if(freq1 > 0) pq.push({freq1, char1});
-            if(freq2 > 0) pq.push({freq2, char2});
+            if(--freq1 > 0) pq.push({freq1, char1});
+            if(--freq2 > 0) pq.push({freq2, char2});
         }
         
         if(!pq.empty()) str += pq.top().second;
