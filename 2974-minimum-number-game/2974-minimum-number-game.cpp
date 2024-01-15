@@ -1,19 +1,15 @@
 class Solution {
 public:
     vector<int> numberGame(vector<int>& nums) {
-        priority_queue<int, vector<int>, greater<int>> pq (begin(nums), end(nums));
+        sort(begin(nums), end(nums));
         
         vector<int> arr;
-        while(pq.size() > 1) {
-            int smallest = pq.top();
-            pq.pop();
-            
-            int second_smallest = pq.top();
-            pq.pop();
-            
-            arr.push_back(second_smallest);
-            arr.push_back(smallest);
-        }
+        int n = nums.size();
+        
+        for(int i = 1; i < n; i += 2) {
+            arr.push_back(nums[i]);
+            arr.push_back(nums[i - 1]);
+        } 
         
         return arr;
     }
