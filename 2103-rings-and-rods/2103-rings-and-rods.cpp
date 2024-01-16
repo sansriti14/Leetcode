@@ -1,20 +1,22 @@
 class Solution {
 public:
     int countPoints(string rings) {
-        unordered_map<char, set<char>> mp;
+        vector<unordered_set<char>> nums(10);
         
-        int size = rings.size();
-        
-        for(int i = 1; i < size; i+= 2) {
-            mp[rings[i]].insert(rings[i - 1]);
+        for(int i = 0; i < rings.size() - 1; i+= 2) {
+            char color = rings[i];
+            int rod = rings[i + 1] - '0';
+            
+            nums[rod].insert(color);
         }
         
-        int count = 0;
-        for(auto it: mp) {
-            if(it.second.size() == 3)
-                count++;
+        int num_rods = 0;
+        for(int i = 0; i < 10; i++) {
+            if(nums[i].size() == 3) {
+                num_rods++;
+            }
         }
         
-        return count;
+        return num_rods;
     }
 };
