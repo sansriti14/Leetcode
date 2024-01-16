@@ -1,13 +1,18 @@
 class RandomizedSet {
-public:
+private:
     vector<int> arr;
     unordered_map<int, int> mp;
     
+    bool present(int val) {
+        return (mp.find(val) != mp.end());
+    }
+ 
+public:    
     RandomizedSet() {
     }
     
     bool insert(int val) {
-        if(mp.find(val) == mp.end()) {
+        if(!present(val)) {
             arr.push_back(val);
             mp[val] = arr.size() - 1;
             return true;
@@ -17,7 +22,7 @@ public:
     }
     
     bool remove(int val) {
-        if(mp.find(val) != mp.end()) {
+        if(present(val)) {
             int last_val = arr.back();
             mp[last_val] = mp[val];
             arr[mp[val]] = last_val;
