@@ -6,9 +6,10 @@ public:
         
         unordered_set<int> freq;
         for(auto it: mp) {
+            if(freq.find(it.second) != freq.end()) return false;
             freq.insert(it.second);
         }
         
-        return (freq.size() == mp.size());
+        return true;
     }
 };
