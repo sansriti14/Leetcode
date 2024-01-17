@@ -13,15 +13,15 @@ public:
             losers[loser]++;
         }
         
-        vector<int> notLost, lostOnce;
+        vector<vector<int>> ans(2);
         for(auto it: losers) {
-            if(it.second == 0) notLost.push_back(it.first);
-            if(it.second == 1) lostOnce.push_back(it.first); 
+            if(it.second == 0) ans[0].push_back(it.first);
+            if(it.second == 1) ans[1].push_back(it.first); 
         }
         
-        sort(notLost.begin(), notLost.end());
-        sort(lostOnce.begin(), lostOnce.end());
+        sort(ans[0].begin(), ans[0].end());
+        sort(ans[1].begin(), ans[1].end());
         
-        return {notLost, lostOnce};
+        return ans;
     }
 };
