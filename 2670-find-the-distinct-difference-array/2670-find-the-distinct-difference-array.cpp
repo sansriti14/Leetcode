@@ -1,23 +1,23 @@
 class Solution {
 public:
     vector<int> distinctDifferenceArray(vector<int>& nums) {
-        vector<int> prefixCount(51, 0), suffixCount(51, 0);
-        int distinctPrefix = 0, distinctSuffix = 0;
-
-        for(auto it: nums) {
-          if(++suffixCount[it] == 1) 
-              ++distinctSuffix;
+        int n = nums.size();
+        
+        vector<int> distinct_suffix (n + 1, 0);
+        unordered_set<int> st;
+        for(int i = n - 1; i >= 0; i--) {
+            st.insert(nums[i]);
+            distinct_suffix[i] = st.size();
         }
         
-        vector<int> distinct_diff;
-        for(auto it: nums) {
-          if(++prefixCount[it] == 1)
-            ++distinctPrefix;
+        st.clear();
+        
+        vector<int> distinct_diff (n);
+        for(int i = 0; i < n; i++) {
+            st.insert(nums[i]);
+            int distinct_prefix = st.size();
             
-          if(--suffixCount[it] == 0)
-            --distinctSuffix;
-            
-          distinct_diff.push_back(distinctPrefix - distinctSuffix);
+            distinct_diff[i] = distinct_prefix - distinct_suffix[i + 1];
         }
 
         return distinct_diff;
