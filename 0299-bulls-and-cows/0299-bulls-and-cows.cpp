@@ -1,22 +1,18 @@
 class Solution {
 public:
     string getHint(string secret, string guess) {
-        unordered_map<char, int> mp;
-        for(auto digit: secret) {
-            mp[digit]++;
-        }
-        
         int n = secret.length();
-        string hint = "";
+        unordered_map<char, int> mp;
         
         int num_bulls = 0, num_cows = 0;
         for(int i = 0; i < n; i++) {
+            mp[secret[i]]++;
             if(secret[i] == guess[i]) {
+                --mp[secret[i]];
                 ++num_bulls;
-                --mp[guess[i]];
             }
         }
-        
+
          for(int i = 0; i < n; i++) {   
             if(secret[i] == guess[i]) continue;
             if(mp.find(guess[i]) != mp.end() && mp[guess[i]] > 0) {
@@ -25,10 +21,7 @@ public:
             }
         }
         
-        hint += to_string(num_bulls);
-        hint += 'A';
-        hint += to_string(num_cows);
-        hint += 'B';
+        string hint = to_string(num_bulls) + 'A' + to_string(num_cows) + 'B';
         
         return hint;
     }
