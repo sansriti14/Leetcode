@@ -25,16 +25,11 @@ public:
         int m = b_indices.size();
         
         vector<int> beautiful_indices;
-        
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
-                if(abs(a_indices[i] - b_indices[j]) <= k) {
-                    beautiful_indices.push_back(a_indices[i]);
-                    break;
-                }
-            }
+        for(auto& i : a_indices) {
+            auto it = lower_bound(b_indices.begin(), b_indices.end(), i - k);
+            if((it != b_indices.end()) && (abs(*it - i) <= k)) beautiful_indices.push_back(i);
         }
-        
+
         return beautiful_indices;
     }
 };
