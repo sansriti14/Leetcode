@@ -1,28 +1,36 @@
 class Solution {
-public:
-    int countVowelSubstrings(string word) {
-        int n = word.length();
-        if(n < 5) return 0;
-        
-        int num_substrings = 0;
+private:
+    int atMostK(string& word, int k) {
+        int n = word.size();
         
         unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u'};
+        unordered_map<char, int> mp;
         
-        int i = 0, j = 0;
-        while(i <= (n - 5)) {
-            while(i <= (n - 5) && (vowels.find(word[i]) == vowels.end())) i++;
-            j = i;
-            
-            unordered_set<char> st;
-            while(j < n && (vowels.find(word[j]) != vowels.end())) {
-                st.insert(word[j]);
-                if(st.size() == 5) num_substrings++;
-                j++;
+        int num_substrings = 0;
+        int i = 0;
+        
+        for(int j = 0; j < n; j++) {
+            if (vowels.find(word[j]) == vowels.end()) {
+                i = j + 1;
+                mp.clear();
+                continue;
             }
             
-            i++;
+            mp[word[j]]++;
+            
+            while(mp.size() > k) {
+                if(--mp[word[i]] == 0) mp.erase(word[i]);
+                i++;
+            }
+            
+            num_substrings += (j - i + 1);
         }
         
         return num_substrings;
+    }
+
+public:
+    int countVowelSubstrings(string word) {
+        return atMostK(word, 5) - atMostK(word, 4);
     }
 };
