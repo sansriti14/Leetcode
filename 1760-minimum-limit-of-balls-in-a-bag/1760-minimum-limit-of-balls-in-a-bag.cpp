@@ -11,9 +11,9 @@ private:
     
 public:
     int minimumSize(vector<int>& nums, int maxOperations) {
-        sort(begin(nums), end(nums));
+        //sort(begin(nums), end(nums));
         int n = nums.size();
-        int low = 1, high = nums[n - 1];
+        int low = 1, high = 1e9;
         
         while(low < high) {
             int mid = low + (high - low) / 2;
