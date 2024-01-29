@@ -12,21 +12,19 @@ private:
     
 public:
     int countLargestGroup(int n) {
-        unordered_map<int, int> mp;
+        vector<int> freq (37, 0);
         for(int i = 1; i <= n; i ++) {
-            mp[i] = sumOfDigits(i);
+            freq[sumOfDigits(i)]++;
         }
         
-        unordered_map<int, int> freq;
         int max_size = 0;
-        for(auto it: mp) {
-            freq[it.second]++;
-            max_size = max(max_size, freq[it.second]);
+        for(auto it: freq) {
+            max_size = max(max_size, it);
         }
         
         int count = 0;
         for(auto it: freq) {
-            if(it.second == max_size) count++;
+            if(it == max_size) count++;
         }
             
         return count;
