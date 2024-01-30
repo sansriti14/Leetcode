@@ -5,16 +5,12 @@ public:
         int m = t.length();
         
         int min_chars = m;
-        int i = 0, j = 0;
-        while(i < n && j < m) {
+        int i = -1, j = -1;
+        while(i++ < n && j++ < m) {
             while(i < n && s[i] != t[j]) i++;
             if(i == n) return min_chars;
-            
-            else {
-                --min_chars;
-                i++;
-                j++;
-            }
+
+            min_chars--;
         }
         
         return min_chars;
