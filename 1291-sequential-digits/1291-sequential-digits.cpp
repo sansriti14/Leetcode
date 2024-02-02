@@ -1,20 +1,18 @@
 class Solution {
-private:
-    void buildNumber(int digit, int num, int low, int high, vector<int>& ans) {
-        if(num >= low && num <= high) ans.push_back(num);
-        
-        if(num > high || digit > 9) return;
-        buildNumber(digit + 1, num * 10 + digit, low, high, ans);
-    }
-    
 public:
     vector<int> sequentialDigits(int low, int high) {
+        string str = "123456789";
+        int min_length = to_string(low).length();
+        int max_length = to_string(high).length();
+        
         vector<int> ans;
-        for(int i = 1; i < 10; i++) {
-            buildNumber(i, 0, low, high, ans);
+        for(int i = min_length; i <= max_length; i++) {
+            for(int j = 0; j < 10 - i; j++) {
+                int num = stoi(str.substr(j, i));
+                if(num >= low && num <= high) ans.push_back(num);
+            }    
         }
         
-        sort(begin(ans), end(ans));
         return ans;
     }
 };
