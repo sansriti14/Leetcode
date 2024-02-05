@@ -3,14 +3,13 @@ public:
     int largestValsFromLabels(vector<int>& values, vector<int>& labels, int numWanted, int useLimit) {
         int n = values.size();
         unordered_map<int, int> freq;
-        for(auto it: labels) {
-            freq[it]++;
-            if(freq[it] > useLimit) freq[it] = useLimit;
-        }
         
         priority_queue<pair<int, int>> pq;
         for(int i = 0; i < n; i++) {
             pq.push({values[i], labels[i]});
+            
+            freq[labels[i]]++;
+            if(freq[labels[i]] > useLimit) freq[labels[i]] = useLimit;
         }
         
         int max_score = 0;
