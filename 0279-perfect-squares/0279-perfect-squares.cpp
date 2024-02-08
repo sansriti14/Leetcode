@@ -2,19 +2,19 @@ class Solution {
     int dp[101][10001];
     
 private:  
-    int findMinSquares(int index, int curr_sum, int n, vector<int>& perfectSquares) {
+    int findMinSquares(int index, int n, vector<int>& perfectSquares) {
         if(index >= perfectSquares.size()) return 1e9;
-        if(curr_sum == n) return 0;
+        if(n == 0) return 0;
         
-        if(dp[index][curr_sum] != -1) return dp[index][curr_sum];
+        if(dp[index][n] != -1) return dp[index][n];
         
-        int not_take = findMinSquares(index + 1, curr_sum, n, perfectSquares);
+        int not_take = findMinSquares(index + 1, n, perfectSquares);
         int take = 1e9;
-        if(curr_sum + perfectSquares[index] <= n) {
-            take = min(not_take, 1 + findMinSquares(index, curr_sum + perfectSquares[index], n, perfectSquares));
+        if(n - perfectSquares[index] >= 0) {
+            take = min(not_take, 1 + findMinSquares(index, n - perfectSquares[index], perfectSquares));
         }
         
-        return dp[index][curr_sum] = min(take, not_take);
+        return dp[index][n] = min(take, not_take);
     }
     
 public:
@@ -25,6 +25,6 @@ public:
         }
         
         memset(dp, -1, sizeof(dp));
-        return findMinSquares(0, 0, n, perfectSquares);
+        return findMinSquares(0, n, perfectSquares);
     }
 };
