@@ -1,34 +1,23 @@
 class Solution {
 private:
-    bool isPalindrome(string str) {
-        int n = str.length();
-        int i = -1;
-        while(i++ < n / 2) {
-            if(str[i] != str[n - i - 1]) return false;
-        }
+    int solve(string& str, int i, int j, vector<vector<int>>& dp) {
+        if (i >= j) return 1;
+        if(str[i] != str[j]) return 0;
+        if (dp[i][j] != -1) return dp[i][j];
         
-        return true;
+        return dp[i][j] = solve(str, i + 1, j - 1, dp);
     }
     
 public:
     int countSubstrings(string s) {
         int n = s.length();
-        unordered_map<char, vector<int>> mp;
-        for(int i = 0; i < n; i++) {
-            mp[s[i]].push_back(i);
-        }
-        
+        vector<vector<int>> dp(n, vector<int>(n, -1));
         int count = 0;
-        int i = -1;
-        while(i++ < n) {
-            for(auto j: mp[s[i]]) {
-                if(j < i) continue;
-                if(isPalindrome(s.substr(i, j - i + 1))) {
-                    count++;
-                }              
+        for(int i = 0; i < s.size(); ++i) {
+            for(int j = i; j < s.size(); ++j) {
+                count += solve(s, i, j, dp);
             }
         }
-        
         return count;
     }
 };
