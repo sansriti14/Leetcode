@@ -17,7 +17,7 @@ private:
             }
         }
         
-        return dp[row][col1][col2] = max_cherries;
+        return dp[row][col1][col2] = dp[row][col2][col1] = max_cherries;
     }
     
 public:
