@@ -1,4 +1,28 @@
 class Solution {
+private:
+    void findFriends(int n, int id, int level, vector<int> adjList[], set<int>& myFriends) {
+        queue<pair<int, int>> q;
+        q.push({id, 0});
+        
+        vector<bool> visited (n, false);
+        visited[id] = true;
+        
+        while(!q.empty()) {
+            auto [person, curr_level] = q.front();
+            q.pop();
+            
+            if(curr_level == level) myFriends.insert(person);
+            if(curr_level > level) break;
+            
+            for(auto adjPerson: adjList[person]) {
+                if(!visited[adjPerson]) {
+                    visited[adjPerson] = true;
+                    q.push({adjPerson, curr_level + 1});
+                }
+            }
+        }
+    }
+    
 public:
     struct comparator {
         bool operator()(pair<int, string>& a, pair<int, string>& b) {
@@ -14,27 +38,8 @@ public:
             adjList[i] = friends[i];
         }
         
-        queue<pair<int, int>> q;
-        q.push({id, 0});
-        
-        vector<bool> visited (n, false);
-        visited[id] = true;
-        
         set<int> myFriends;
-        while(!q.empty()) {
-            auto [person, curr_level] = q.front();
-            q.pop();
-            
-            if(curr_level == level) myFriends.insert(person);
-            if(curr_level > level) break;
-            
-            for(auto adjPerson: adjList[person]) {
-                if(!visited[adjPerson]) {
-                    visited[adjPerson] = true;
-                    q.push({adjPerson, curr_level + 1});
-                }
-            }
-        }
+        findFriends(n, id, level, adjList, myFriends);
         
         unordered_map<string, int> mp;
         for(int person = 0; person < n; person++) {
