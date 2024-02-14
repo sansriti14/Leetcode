@@ -23,8 +23,6 @@ public:
             }
         }
         
-        cout<<most_common<<endl;
-        
         int min_crossed = 0;
         for(int row = 0; row < n; row++) {
             if(prefix[row].find(most_common) == prefix[row].end())
