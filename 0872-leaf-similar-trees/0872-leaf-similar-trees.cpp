@@ -14,23 +14,37 @@ private:
     bool isLeaf(TreeNode* node) {
         return (!node->left && !node->right);
     }
-    
-    void dfs(TreeNode* node, string& str) {
+
+    void getSequence(TreeNode* node, vector<int>& leaf_seq) {
         if(node == NULL) return;
         
-        if(isLeaf(node))
-            str += (to_string(node->val) + "#");
+        if (isLeaf(node)) {
+            leaf_seq.push_back(node->val);
+            return;
+        }
         
-        dfs(node->left, str);
-        dfs(node->right, str);
-    }
+        getSequence(node->left, leaf_seq);
+        getSequence(node->right, leaf_seq);
+    }    
     
 public:
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-        string leaf_seq1 = "", leaf_seq2 = "";
-        dfs(root1, leaf_seq1);
-        dfs(root2, leaf_seq2);
+        vector<int> leaf_seq1;
+        vector<int> leaf_seq2;
         
-        return leaf_seq1 == leaf_seq2;
+        getSequence(root1, leaf_seq1);
+        getSequence(root2, leaf_seq2);
+        
+        if (leaf_seq1.size() != leaf_seq2.size()) {
+            return false;
+        }
+        
+        for (int i = 0; i < leaf_seq1.size(); i++) {
+            if (leaf_seq1[i] != leaf_seq2[i]) {
+                return false;
+            }
+        }
+        
+        return true;
     }
-};
+}; 
