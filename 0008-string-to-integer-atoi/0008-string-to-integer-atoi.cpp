@@ -11,7 +11,7 @@ public:
         
         long long num = 0;
         if(s[i] == '-' || s[i] == '+') ++i;
-        while(s[i] == '0') i++;
+        while(i < n && s[i] == '0') i++;
         
         int j = i;
         while(j < n && isdigit(s[j])) j++;
