@@ -4,16 +4,15 @@ public:
         int n = nums.size();
         
         map<int, int> mp;
-        for(int i = 0; i < n; i ++) {
-            mp[nums[i]] ++;            
+        for(auto it: nums) mp[it]++;
+        
+        int num_operations = 0;
+        int prev = 0;
+        for (auto i = mp.end(); i != mp.begin(); i--) {
+            num_operations += i -> second + prev;   
+            prev += i -> second;        
         }
         
-        int ans = 0;
-        int pre = 0;
-        for (auto i = mp.end(); i != mp.begin(); i--) {
-            ans += i -> second + pre;   
-            pre += i -> second;        
-        }
-        return ans;
+        return num_operations;
     }
 };
