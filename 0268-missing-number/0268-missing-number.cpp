@@ -2,21 +2,9 @@ class Solution {
 public:
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
+        int expected_sum = (n * (n + 1)) / 2;
+        int actual_sum = accumulate(begin(nums), end(nums), 0);
         
-        bool zeroPresent = false;
-        for(int i = 0; i < n; i++) {
-            if(nums[i] == 0) zeroPresent = true;
-            int index = abs(nums[i]) - 1;
-            if(index < 0) continue;
-            nums[index] = -nums[index];
-        }
-        
-        int index = -1;
-        for(int i = 0; i < n; i++) {
-            if(nums[i] > 0) return i + 1;
-            if(nums[i] == 0) index = i;
-        }
-        
-        return (zeroPresent == true) ? index + 1 : 0;
+        return expected_sum - actual_sum;
     }
 };
