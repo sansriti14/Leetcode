@@ -8,6 +8,11 @@ public:
             pq.pop();
             
             pq.push(-num);
+            
+            if(num >= 0) {
+                if(k % 2 == 0) break;
+                else k = 1;
+            }
         }
         
         int max_sum = 0;
