@@ -1,18 +1,32 @@
 class Solution {
-public:
-    int countCompleteSubarrays(vector<int>& A) {
-        int n = A.size();
-        int k = unordered_set<int> (A.begin(), A.end()).size();
-        int ans = 0, i = 0;
-        unordered_map<int, int> count;
+private:
+    int countAtMost(vector<int>& nums, unordered_map<int, int> freq, int k) {
+        int num_subarrays = 0;
+        int curr_distinct = 0;
         
-        for (int j = 0; j < n; j++) {
-            k -= count[A[j]]++ == 0;
-            while (k == 0) {
-                k += --count[A[i++]] == 0;
+        int i = 0, j = 0;
+        while(j < nums.size()) {
+            if(++freq[nums[j]] == 1) curr_distinct++;
+            
+            while(curr_distinct > k) {
+                if(--freq[nums[i]] == 0) curr_distinct--;
+                i++;
             }
-            ans += i;
+            
+            j++;
+            num_subarrays += (j - i + 1);
         }
-        return ans;
+        
+        return num_subarrays;
+    }
+    
+public:
+    int countCompleteSubarrays(vector<int>& nums) {
+        unordered_map<int, int> freq;
+        for(auto it: nums) freq[it]++;
+        
+        int k = freq.size();
+        freq.clear();
+        return countAtMost(nums, freq, k) -  countAtMost(nums, freq, k - 1);
     }
 };
