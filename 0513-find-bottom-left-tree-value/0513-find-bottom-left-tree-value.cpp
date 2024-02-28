@@ -11,7 +11,7 @@
  */
 class Solution {
 private:
-    void find(TreeNode* node, int& bottomLeftValue, int level, int& maxDepth) {
+    void findLeftmost(TreeNode* node, int& bottomLeftValue, int level, int& maxDepth) {
         if(node == NULL) return;
         
         if(level > maxDepth) {
@@ -19,15 +19,17 @@ private:
             maxDepth = level;
         }
         
-        find(node->left, bottomLeftValue, level+1, maxDepth);
-        find(node->right, bottomLeftValue, level+1, maxDepth);
+        findLeftmost(node->left, bottomLeftValue, level + 1, maxDepth);
+        findLeftmost(node->right, bottomLeftValue, level + 1, maxDepth);
     }
    
 public:
     int findBottomLeftValue(TreeNode* root) {
         int bottomLeftValue = root->val;
+        
         int maxDepth = 0;
-        find(root, bottomLeftValue, 0, maxDepth);
+        findLeftmost(root, bottomLeftValue, 0, maxDepth);
+        
         return bottomLeftValue;
     }
 };
