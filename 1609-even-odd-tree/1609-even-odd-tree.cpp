@@ -12,13 +12,13 @@
 class Solution {
 public:
     bool isEvenOddTree(TreeNode* root) {
-        vector<vector<int>> bfs;
         queue<TreeNode*> q;
         q.push(root);
         
+        int curr_level = 0;
+        
         while(!q.empty()) {
             int size = q.size();
-            int curr_level = bfs.size();
             
             vector<int> level;
             while(size--) {
@@ -37,7 +37,7 @@ public:
                 if(node->right) q.push(node->right);
             }
             
-            bfs.push_back(level);
+            curr_level++;
         }
         
         return true;
