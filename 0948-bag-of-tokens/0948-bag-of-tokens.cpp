@@ -9,15 +9,13 @@ public:
         int low = 0, high = tokens.size() - 1;
         while(low <= high) {
             if(power >= tokens[low]) {
-                power -= tokens[low];
+                power -= tokens[low++];
                 max_score = max(max_score, ++curr_score);
-                low++;
             }
             
             else if(max_score >= 1) {
-                power += tokens[high];
+                power += tokens[high--];
                 curr_score--;
-                high--;
             }
             
             else break;
