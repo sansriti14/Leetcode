@@ -7,7 +7,7 @@ public:
         if(n < m) return -1;
 
         int first_index = -1;
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i <= n - m; i++) {
             if(haystack[i] != needle[0]) continue;
             
             if(haystack.substr(i, m) == needle) {
