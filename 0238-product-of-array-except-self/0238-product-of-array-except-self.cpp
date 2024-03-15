@@ -3,23 +3,17 @@ public:
     vector<int> productExceptSelf(vector<int>& nums) {
         int n = nums.size();
         
-        int countZero = 0;
-        long long product = 1;
+        vector<int> ans(n, 1);
+        int currProduct = 1;
         for(int i = 0; i < n; i++) {
-            if(nums[i] != 0) {
-                product *= nums[i];
-            }
-            
-            else countZero++;
+            ans[i] *= currProduct;
+            currProduct *= nums[i];
         }
         
-        vector<int> ans(n);
-        for(int i = 0; i < n; i++) {
-            if((countZero > 0 && nums[i] != 0) || countZero > 1) {
-                ans[i] = 0;
-            }
-            
-            else ans[i] = (nums[i] == 0) ? product : product / nums[i];
+        currProduct = 1;
+        for(int i = n - 1; i >= 0; i--) {
+            ans[i] *= currProduct;
+            currProduct *= nums[i];
         }
         
         return ans;
