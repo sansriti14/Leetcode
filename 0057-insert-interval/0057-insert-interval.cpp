@@ -24,11 +24,19 @@ private:
     
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        intervals.push_back(newInterval);
+        vector<vector<int>> mergedArray;
         
-        if(intervals.size() == 1) return intervals;
+        for(int i = 0; i < intervals.size(); i++) {
+            if(intervals[i][0] > newInterval[0]) {
+                mergedArray.push_back(newInterval);
+            }
+            
+            mergedArray.push_back(intervals[i]);  
+        }
         
-        sort(begin(intervals), end(intervals));
-        return mergeOverlappingIntervals(intervals);
+        if(mergedArray.empty()) return vector<vector<int>> {newInterval};
+        if(mergedArray.size() == intervals.size()) mergedArray.push_back(newInterval);
+        
+        return mergeOverlappingIntervals(mergedArray);
     }
 };
