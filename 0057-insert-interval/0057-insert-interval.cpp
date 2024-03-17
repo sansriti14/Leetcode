@@ -1,29 +1,28 @@
 class Solution {
-private:
-    vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>>& intervals) {
-        vector<vector<int>> mergedArray;
-        vector<int> prevInterval = intervals[0];
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> mergedIntervals;
+        bool inserted = false;    
         
-        for(int i = 0; i < intervals.size(); i++) {
-            if(prevInterval[1] >= intervals[i][0]) {
-                prevInterval[1] = max(prevInterval[1], intervals[i][1]);
+        for (int i = 0; i < intervals.size(); i++) {
+            if (!inserted && newInterval[1] < intervals[i][0]) {   
+                mergedIntervals.push_back(newInterval);
+                mergedIntervals.push_back(intervals[i]);
+                inserted = true;
             }
             
-            else {
-                mergedArray.push_back(prevInterval);
-                prevInterval = intervals[i];
+            else if (inserted || newInterval[0] > intervals[i][1]) {  
+                mergedIntervals.push_back(intervals[i]);
+            }
+            
+            else {                                             
+                newInterval[0] = min(newInterval[0], intervals[i][0]);
+                newInterval[1] = max(newInterval[1], intervals[i][1]);
             }
         }
         
-        mergedArray.push_back(prevInterval);
-        return mergedArray;
-    }
-    
-public:
-    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        intervals.push_back(newInterval);
-        sort(begin(intervals), end(intervals));
+        if (!inserted) mergedIntervals.push_back(newInterval);
         
-        return mergeOverlappingIntervals(intervals);
+        return mergedIntervals;
     }
 };
