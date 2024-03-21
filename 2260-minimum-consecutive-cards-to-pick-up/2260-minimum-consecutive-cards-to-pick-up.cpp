@@ -9,14 +9,10 @@ public:
         while(j < n) {
             if(st.find(cards[j]) != st.end()) {
                 minCards = min(minCards, (int)st.size() + 1);
-                st.erase(cards[i]);
-                i++;
+                st.erase(cards[i++]);
             }
             
-            else {
-                st.insert(cards[j]);
-                j++;
-            }
+            else st.insert(cards[j++]);
         } 
         
         return (minCards == n + 1) ? -1 : minCards;
