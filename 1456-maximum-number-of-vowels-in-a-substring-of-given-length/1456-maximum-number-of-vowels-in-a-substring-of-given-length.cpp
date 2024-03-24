@@ -10,17 +10,15 @@ public:
         int n = s.length();
         
         int currVowels = 0;
-        
         for(int i = 0; i < k; i++) {
             if(isVowel(s[i])) currVowels++;
         }
         
         int maxVowels = currVowels;
-        int i = 0, j = k - 1;
-        while (j < n) {
-            if(isVowel(s[i++])) currVowels--;
-            
-            if(isVowel(s[++j])) currVowels++;
+        int i = k;
+        while (i < n) {
+            if(isVowel(s[i - k])) currVowels--;
+            if(isVowel(s[i++])) currVowels++;
             
             maxVowels = max(maxVowels, currVowels);
         }
