@@ -1,24 +1,19 @@
 class Solution {
-private:
-    bool isVowel(char ch) {
-        unordered_set<char> st = {'a', 'e', 'i', 'o', 'u'};
-        return (st.find(ch) != st.end());
-    }
-    
 public:
     int maxVowels(string s, int k) {
         int n = s.length();
+        vector<int> vowels = {1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0};
         
         int currVowels = 0;
         for(int i = 0; i < k; i++) {
-            if(isVowel(s[i])) currVowels++;
+            currVowels += vowels[s[i] - 'a'];
         }
         
         int maxVowels = currVowels;
         int i = k;
         while (i < n) {
-            if(isVowel(s[i - k])) currVowels--;
-            if(isVowel(s[i++])) currVowels++;
+            currVowels -= vowels[s[i - k] - 'a'];
+            currVowels += vowels[s[i++] - 'a'];
             
             maxVowels = max(maxVowels, currVowels);
         }
