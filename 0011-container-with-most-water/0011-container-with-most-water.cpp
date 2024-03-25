@@ -5,7 +5,7 @@ public:
         int high = height.size() - 1;
         
         int maxAmount = 0;
-        while (low <= high) {
+        while (low < high) {
             int currAmount = (high - low) * min(height[low], height[high]);
             maxAmount = max(maxAmount, currAmount);
             
