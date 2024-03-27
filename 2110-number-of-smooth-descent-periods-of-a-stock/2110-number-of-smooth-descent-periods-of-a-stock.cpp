@@ -4,16 +4,14 @@ public:
         int n = prices.size();
         if (n == 1) return 1;
         
+        long long curr = 0;
         long long descent_days = 0;
         
-        int i = 0, j = 0;
-        while (j < n) {
-            i = j;
-            while (j < n - 1 && prices[j] - prices[j + 1] == 1) j++;
+        for (int i = 0; i < n; i++) {
+            if (i != 0 && prices[i - 1] - prices[i] == 1) curr++;
+            else curr = 1;
             
-            int length = j - i + 1;
-            descent_days += (((long long)length * (length + 1)) / 2);
-            j++;
+            descent_days += curr;
         }
         
         return descent_days;
