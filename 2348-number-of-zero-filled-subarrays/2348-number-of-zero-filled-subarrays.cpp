@@ -6,8 +6,7 @@ public:
         
         for(int i = 0; i < nums.size(); i++) {
             if(nums[i] == 0) {
-                currCount++;
-                count += currCount;
+                count += ++currCount;
             }
             
             else currCount = 0;
