@@ -25,7 +25,7 @@ public:
                     char modifiedDigit = (originalDigit - '0' + j + 10) % 10 + '0'; 
                     currCode[i] = modifiedDigit;
                     
-                    if (!visited.count(currCode) && !deadendCodes.count(currCode)) {
+                    if (visited.find(currCode) == visited.end() && deadendCodes.find(currCode) == deadendCodes.end()) {
                         visited[currCode] = true;
                         q.push({currCode, currTurns + 1});
                     }
