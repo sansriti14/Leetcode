@@ -1,4 +1,4 @@
-class Solution {
+class Solution {   
 public:
     int openLock(vector<string>& deadends, string target) {
         unordered_set<string> deadendCodes (begin(deadends), end(deadends));
@@ -9,8 +9,8 @@ public:
         queue<pair<string, int>> q;
         q.push({"0000", 0});
         
-        vector<bool> visited (10000, false);
-        visited[0] = true;
+        unordered_map<string, bool> visited;
+        visited["0000"] = true;
         
         while (!q.empty()) {
             auto [currCode, currTurns] = q.front();
@@ -25,8 +25,8 @@ public:
                     char modifiedDigit = (originalDigit - '0' + j + 10) % 10 + '0'; 
                     currCode[i] = modifiedDigit;
                     
-                    if (!visited[stoi(currCode)] && deadendCodes.find(currCode) == deadendCodes.end()) {
-                        visited[stoi(currCode)] = true;
+                    if (!visited.count(currCode) && !deadendCodes.count(currCode)) {
+                        visited[currCode] = true;
                         q.push({currCode, currTurns + 1});
                     }
                 }
