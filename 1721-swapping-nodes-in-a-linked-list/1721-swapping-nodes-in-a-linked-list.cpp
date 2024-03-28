@@ -26,9 +26,7 @@ public:
         for (int i = 1; i <= k - 1; i++) ptr1 = ptr1->next;
         for (int i = 1; i <= n - k; i++) ptr2 = ptr2->next;
         
-        int temp = ptr1->val;
-        ptr1->val = ptr2->val;
-        ptr2->val = temp;
+        swap(ptr1->val, ptr2->val);
         
         return head;
     }
