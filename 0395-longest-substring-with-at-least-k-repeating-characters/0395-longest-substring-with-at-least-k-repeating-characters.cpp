@@ -12,13 +12,13 @@ public:
 
         int maxLength = 0;
         
-        for (int i = 1; i <= total_distinct; i++) {
+        for (int curr_distinct = 1; curr_distinct <= total_distinct; curr_distinct++) {
             int start = 0, end = 0;
             int currCount = 0, countExactlyK = 0;
             freq.clear();
             
             while (end < n) {
-                if (currCount <= i) {
+                if (currCount <= curr_distinct) {
                     if (++freq[s[end]] == k) countExactlyK++;
                     if (freq[s[end]] == 1) currCount++;
                     end++;
@@ -30,7 +30,7 @@ public:
                     start++;
                 }
                 
-                if (currCount == i && countExactlyK == i) {
+                if (currCount == curr_distinct && countExactlyK == curr_distinct) {
                     maxLength = max(maxLength, end - start);
                 }
             }
