@@ -9,12 +9,14 @@ class Solution {
         if (dp[currIndex][prevIndex][k].count(currDiff))
             return dp[currIndex][prevIndex][k][currDiff];
 
-        int take = 0;
-        if (prevIndex == -1)
-            take = findSumOfPowers(currIndex + 1, currIndex, k - 1, currDiff, nums);
-        else
-            take = findSumOfPowers(currIndex + 1, currIndex, k - 1, min(currDiff, abs(nums[currIndex] - nums[prevIndex])), nums);
         int notTake = findSumOfPowers(currIndex + 1, prevIndex, k, currDiff, nums);
+        
+        int take = 0;
+        if (prevIndex == -1) {
+            take = findSumOfPowers(currIndex + 1, currIndex, k - 1, currDiff, nums);
+        } else {
+            take = findSumOfPowers(currIndex + 1, currIndex, k - 1, min(currDiff, abs(nums[currIndex] - nums[prevIndex])), nums);
+        }
 
         return dp[currIndex][prevIndex][k][currDiff] = (take % mod + notTake % mod) % mod;
     }
