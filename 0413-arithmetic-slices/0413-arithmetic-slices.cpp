@@ -5,20 +5,14 @@ public:
         if (n < 3) return 0;
         
         int numOfSubarrays = 0;
-        int count = 0;
         
-        for(int i = 0; i < n - 2; i++) {
-            if(nums[i + 1] - nums[i] == nums[i + 2] - nums[i + 1]) {
-                count++;
+        for(int i = 2, j = 1; i < n; i++) {
+            if(nums[i] - nums[i - 1] != nums[j] - nums[j - 1]) {
+                j = i;
             }
-            
-            else {
-                numOfSubarrays += ((count * (count + 1)) / 2);
-                count = 0;
-            }   
+                
+            numOfSubarrays += (i - j);
         }
-        
-        if (count) numOfSubarrays += ((count * (count + 1)) / 2);
         
         return numOfSubarrays;
     }
