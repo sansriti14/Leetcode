@@ -1,30 +1,37 @@
 class Solution {
-    unordered_map<int, unordered_map<int, unordered_map<int, unordered_map<int, int>>>> dp;
-    int mod = 1e9 + 7;
+public:
+    int mod = 1000000007;
+    unordered_map<int, unordered_map<int, unordered_map<int, unordered_map<long, long>>>> dp;
 
-    int findSumOfPowers(int currIndex, int prevIndex, int k, int currDiff, vector<int>& nums) {
-        if (k == 0) return currDiff % mod;
-        if (currIndex == nums.size()) return 0;
-        
-        if (dp[currIndex][prevIndex][k].count(currDiff))
-            return dp[currIndex][prevIndex][k][currDiff];
-
-        int notTake = findSumOfPowers(currIndex + 1, prevIndex, k, currDiff, nums);
-        
-        int take = 0;
-        if (prevIndex == -1) {
-            take = findSumOfPowers(currIndex + 1, currIndex, k - 1, currDiff, nums);
-        } else {
-            take = findSumOfPowers(currIndex + 1, currIndex, k - 1, min(currDiff, abs(nums[currIndex] - nums[prevIndex])), nums);
+    long solve(int ind, int last, int size, long long mn, vector<int> &nums, int k) {
+        int n = nums.size();
+        if (size == k) {
+            return mn % mod;
         }
+        if (ind >= n)
+            return 0;
 
-        return dp[currIndex][prevIndex][k][currDiff] = (take % mod + notTake % mod) % mod;
+        if (dp[ind][last][size].count(mn))
+            return dp[ind][last][size][mn];
+
+        long pick = LONG_MAX, notPick = LONG_MAX;
+        long long diff = LONG_MAX;
+        if (last != -1) {
+            diff = abs(nums[ind] * 1LL - nums[last]) % mod;
+        }
+        
+        pick = solve(ind + 1, ind, size + 1, min(mn, diff), nums, k);
+
+        notPick = solve(ind + 1, last, size, mn, nums, k);
+
+        return dp[ind][last][size][mn] = (pick + notPick) % mod;
+
     }
 
-public:
-    int sumOfPowers(vector<int>& nums, int k) {
+    int sumOfPowers(vector<int> &nums, int k) {
         sort(nums.begin(), nums.end());
-        return findSumOfPowers(0, -1, k, 1e9, nums);
+
+        return solve(0, -1, 0, LONG_MAX, nums, k);
+
     }
 };
-
