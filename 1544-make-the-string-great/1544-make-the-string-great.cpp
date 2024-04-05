@@ -5,8 +5,6 @@ public:
         if (n == 1) return s;
         
         string good_str = "";
-        
-        int i = 0, j = 1;
         for (int i = 0; i < n; i++) {
             good_str += s[i];
             while (!good_str.empty() && abs(good_str.back() - s[i + 1]) == 32) {
