@@ -1,28 +1,25 @@
 class Solution {
 public:
     int countStudents(vector<int>& students, vector<int>& sandwiches) {
-        vector<int> preferred (2, 0);
+        int n = sandwiches.size();
         
-        queue<int> q;
+        int preferred_circular = 0, preferred_square = 0;
+        
         for (auto preference: students) {
-            preferred[preference]++;
-            q.push(preference);
+            if (preference == 0) preferred_circular++;
+            else preferred_square++;
         }
         
-        int index = 0;
-        while (index < sandwiches.size() && preferred[sandwiches[index]] != 0) {
-            if (q.front() == sandwiches[index]) {
-                q.pop();
-                preferred[sandwiches[index]]--;
-                index++;
-            }
+        int ans = n;
+        for (int i = 0; i < n; i++) {
+            if ((sandwiches[i] == 0 && preferred_circular == 0) || (sandwiches[i] == 1 && preferred_square == 0)) return ans;
             
-            else {
-                q.push(q.front());
-                q.pop();
-            }
+            if (sandwiches[i] == 0) preferred_circular--;
+            else preferred_square--;
+            
+            ans--;
         }
-        
-        return q.size();
+
+        return ans;
     }
 };
