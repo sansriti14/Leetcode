@@ -1,27 +1,30 @@
 class Solution {
+private:
+    int findRealCoefficient(string& num, int& i) {
+        string temp = "";
+        while (num[i] != '+') temp += num[i++];
+        return stoi(temp);
+    }
+    
+    int findImaginaryCoefficent(string& num, int i) {
+        string temp = "";
+        while (num[i] != 'i') temp += num[i++];
+        return stoi(temp);
+    }
+    
 public:
     string complexNumberMultiply(string num1, string num2) {
         int a1, a2, b1, b2;
     
         int i = 0;
-        string temp = "";
-        while (num1[i] != '+') temp += num1[i++];
-        a1 = stoi(temp);
-        
+        a1 = findRealCoefficient(num1, i);
         i++;
-        temp.clear();
-        while (num1[i] != 'i') temp += num1[i++];
-        b1 = stoi(temp);
+        b1 = findImaginaryCoefficent(num1, i);
         
-        int j = 0;
-        temp.clear();
-        while (num2[j] != '+') temp += num2[j++];
-        a2 = stoi(temp);
-        
-        j++;
-        temp.clear();
-        while (num2[j] != 'i') temp += num2[j++];
-        b2 = stoi(temp);
+        i = 0;
+        a2 = findRealCoefficient(num2, i);
+        i++;
+        b2 = findImaginaryCoefficent(num2, i);
         
         int x = (a1 * a2) - (b1 * b2);
         int y = (a1 * b2) + (b1 * a2);
