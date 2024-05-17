@@ -10,22 +10,13 @@
  * };
  */
 class Solution {
-private:
-    bool isLeaf(TreeNode* node) {
-        return (!node->left && !node->right);
-    }
-    
-    TreeNode* solve(TreeNode* node, int target) {
-        if (node == NULL) return NULL;
-        
-        node->left = solve(node->left, target);
-        node->right = solve(node->right, target);
-        
-        return (node->left == node->right && node->val == target) ? NULL : node;
-    }
-    
 public:
     TreeNode* removeLeafNodes(TreeNode* root, int target) {
-        return solve(root, target);
+        if (root == NULL) return NULL;
+        
+        root->left = removeLeafNodes(root->left, target);
+        root->right = removeLeafNodes(root->right, target);
+        
+        return (root->left == root->right && root->val == target) ? NULL : root;
     }
 };
