@@ -1,11 +1,12 @@
 class Solution {
 private:
     int findNumBalls(vector<int>& position, int minDistance) {
-        int numBalls = 1, prev = position[0];
+        int numBalls = 1;
+        int prevPosition = position[0];
         for(int curr = 1; curr < position.size(); curr++) {
-            if(position[curr] - prev >= minDistance) {
+            if(position[curr] - prevPosition >= minDistance) {
                 numBalls++;
-                prev = position[curr];
+                prevPosition = position[curr];
             }
         }
         
