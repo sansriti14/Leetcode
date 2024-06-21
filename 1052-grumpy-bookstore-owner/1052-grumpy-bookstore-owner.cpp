@@ -1,28 +1,36 @@
-class Solution
-{
+class Solution {
 public:
-    int maxSatisfied(vector<int> &customers, vector<int> &grumpy, int minutes)
-    {
+    int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int minutes) {
         int n = customers.size();
-        int alreadySatisfied = 0;
-        int speciallySatisfied = 0;
-        
+        int ans = 0;
+
         for (int i = 0; i < n; i++) {
-            if (grumpy[i] == 0) {
-                alreadySatisfied += customers[i];
+            if (grumpy[i] == 0)
+                ans += customers[i];
+        }
+
+        int sum = 0;
+        int maxSum=0;
+        int i = 0, j = 0;
+
+        while (j < n) {
+            if (grumpy[j] == 1) {
+                sum += customers[j];
+            }
+
+            if (j - i >= minutes) {
+                if(grumpy[i] == 1) {
+                    sum -= customers[i];
+                }
+                
+                i++;
             }
             
-            customers[i] *= grumpy[i];
+            maxSum = max(maxSum, sum);
+            j++;
         }
-        
-        for (int i = 1; i < n; i++) {
-            customers[i] += customers[i - 1];
-        }
-        
-        for (int i = minutes - 1; i < n; i++) {
-            speciallySatisfied = max(speciallySatisfied, customers[i] - (i - minutes >= 0 ? customers[i - minutes] : 0));
-        }
-        
-        return alreadySatisfied + speciallySatisfied;
+
+        ans += maxSum;
+        return ans;
     }
 };
