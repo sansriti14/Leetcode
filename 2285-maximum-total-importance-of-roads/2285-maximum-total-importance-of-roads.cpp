@@ -8,7 +8,9 @@ public:
         }
         
         priority_queue<pair<int, int>> pq;
-        for(auto it: mp) pq.push({it.second, it.first});
+        for(auto it: mp) {
+            pq.push({it.second, it.first});
+        }
         
         long long max_importance = 0;
         while(!pq.empty()) {
