@@ -2,20 +2,15 @@ class Solution {
 public:
     string nearestPalindromic(string n) {
         int len = n.size();
-        // Edge case: "1"
         if (n == "1") return "0";
 
-        // Store the original number as an integer
         long long original = stoll(n);
         
-        // Candidates to consider
         set<long long> candidates;
         
-        // 1. Add edge cases
-        candidates.insert((long long)pow(10, len - 1) - 1); // 999...999
-        candidates.insert((long long)pow(10, len) + 1);     // 100...001
-
-        // 2. Use the first half of the number to generate palindromes
+        candidates.insert((long long)pow(10, len - 1) - 1); 
+        candidates.insert((long long)pow(10, len) + 1);     
+        
         long long prefix = stoll(n.substr(0, (len + 1) / 2));
         vector<long long> possible_prefixes = {prefix - 1, prefix, prefix + 1};
         
@@ -30,7 +25,6 @@ public:
             candidates.insert(stoll(palindrome));
         }
 
-        // Find the closest palindrome
         long long closest = -1;
         for (long long candidate : candidates) {
             if (candidate != original) {
