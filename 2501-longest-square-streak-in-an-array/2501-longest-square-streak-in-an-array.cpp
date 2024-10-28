@@ -1,12 +1,12 @@
 class Solution {
 public:
     int longestSquareStreak(vector<int>& nums) {
-        sort(begin(nums), end(nums));
+        set<int> st (begin(nums), end(nums));
         
         unordered_map<int, int> mp;
         int maxLength = -1;
         
-        for (auto it: nums) {
+        for (auto it: st) {
             int root = sqrt(it);
             if (root * root == it) {
                 mp[it] = 1 + mp[root];
